@@ -11,7 +11,8 @@ as a string, put the answer as an ordered list (<ol>). (edited)
 hw 2: hw 1 with no classes (still no id's) 
 */
 
-function sieveUpTo(n) {
+function sieveUpTo(n) 
+{
     let A = [...Array(n-1).keys()];
     A = A.map(function(a) {return a + 2});
     console.log(A);
@@ -31,63 +32,23 @@ function sieveUpTo(n) {
             }
         }
     }
-
     return A.filter(a => a !== null);
 }
 
-function isPrime(num) {
-    for (let j = 2; j < num; j++) {
-        if (num % j == 0) return false;
+function generateOL(primes) { 
+    let primeDisplay = document.createElement("ol")
+    primeDisplay.setAttribute("class", "primeDisplay")
+    for (let i = 0; i < primes.length; i++) {
+        let elm = document.createElement("li");
+        elm.innerText = primes[i].toString();
+        primeDisplay.append(elm);
     }
-    return true;
+    let curDisplay = document.querySelector(".primeDisplay") 
+    // document.querySelector("cssSelectorString"); (look up css selectors)
+    if (curDisplay === null) document.body.appendChild(primeDisplay);
+    else curDisplay.innerHTML = primeDisplay;
 }
 
-function calculatePrimeFactors() {
-    let userInput = document.querySelector("#userInput").value;
-    console.log(userInput)
-    let factors = sieveUpTo(userInput);
-    // let factors = [];
-    // if (userInput < 0) {
-    //     userInput *=  -1;
-    // }
-
-    // for (let i = 2; i < userInput; i++) {
-    //     console.log(i)
-    //     if (userInput % i == 0) {
-    //         console.log('divides')
-    //         if (isPrime(i)) {
-    //             factors.push(i);
-    //             console.log('isPrime')
-    //         } else {
-    //             console.log('not prime')
-    //         }
-    //     }
-    // }
-    
-    // console.log(factors)
-    return factors
-}
-
-function showFactors(factors) {
-    let factorString
-    if (factors.length === 0) {
-        factorString = "Sorry, can't find any prime factors for ya!"
-    } else {
-        factorString = factors.toString()
-    }
-    
-    let curDisplay = document.querySelector("h2.factorDisplay") // document.querySelector("cssSelectorString"); (look up css selectors)
-    
-    if (curDisplay === null) {
-        let factorDisplay = document.createElement("h2")
-        factorDisplay.setAttribute("class", "factorDisplay")
-        factorDisplay.innerText = factorString
-        document.body.appendChild(factorDisplay)
-    } else {
-        curDisplay.innerText = factorString
-    }
-}
-
-function displayPrimeFactors() {
-    showFactors(calculatePrimeFactors());
+function accomplishStevesRequest() {
+    generateOL(sieveUpTo(document.querySelector(".userInput").value))
 }
